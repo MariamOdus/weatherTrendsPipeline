@@ -47,7 +47,7 @@ This project builds a full data pipeline from API extraction to data transformat
 
 - ETL Pipeline:  Completed
 - Data Cleaning:  Completed
-- EDA: 🛠 In Progress
+- EDA: In Progress
 - SQL Storage: To Complete
 - ML Forecasting: To Complete 
 
