@@ -4,7 +4,7 @@ import os
 
 # Define file paths
 RAW_DATA_FILE = "data/raw/london_weather_2002-01-01_to_2024-12-31.json"
-TRANSFORMED_DATA_FILE = "data/tranformed/london_weather_cleaned.csv"
+TRANSFORMED_DATA_FILE = "data/transformed/london_weather_cleaned.csv"
 
 # Ensure processed data folder exists
 os.makedirs("data/transformed", exist_ok=True)
@@ -26,11 +26,15 @@ df["date"] = pd.to_datetime(df["date"])
 df["month"] = df["date"].dt.month
 df["year"] = df["date"].dt.year
 
-# Convert 'wspd' (wind speed) to numeric and handle errors
+# Convert 'wspd' to numeric
 df["wspd"] = pd.to_numeric(df["wspd"], errors="coerce")
 
-# Apply linear interpolation to missing 'wspd' values
+# Interpolate linearly
 df["wspd"] = df["wspd"].interpolate(method="linear")
+
+# Fill starting NaNs using backward fill
+df["wspd"].fillna(method="bfill", inplace=True)
+
 
 # Save the cleaned data
 df.to_csv(TRANSFORMED_DATA_FILE, index=False)
